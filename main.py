@@ -2,49 +2,9 @@
 
 import tkinter as tk
 from tkinter import font as tkfont
-
-
-class PreWorkout:                               # class to hold preworkout information
-    def __init__(self, name, flavor, price, servings, caffeine):
-        self.name = name
-        self.flavor = flavor
-        self.price = price
-        self.servings = servings
-        self.caffeine = caffeine
-
-
-def print_preworkout(preworkout_list):
-    element = ''
-    for i in range(len(preworkout_list)):
-        element += preworkout_list[i].name + ' $' + str(preworkout_list[i].price) + ' ' + str(preworkout_list[i].servings) + '\n'
-    return element
-
-
-bucked_up = PreWorkout("Bucked Up Woke AF", "Watermelon Lemonade", 54.99, 30, 333)
-ghost_legend = PreWorkout("Ghost Legend", "Ocean Water", 44.99, 25, 250)
-alani_nu = PreWorkout("Alani Nu Pre-Workout", "Breezeberry", 39.99, 30, 200)
-total_war = PreWorkout("Total War REDCON1", "Tiger's Blood", 44.99, 30, 250)
-
-preworkout_list = [bucked_up, ghost_legend, alani_nu, total_war]
-
-
-class Exercise:                                 # class to hold info about individual exercises
-
-    def __init__(self, name):
-        self.name = name
-        self.reps = 0
-
-
-class Workout:                                  # class to hold workout data
-
-    def __init__(self):
-        self.title = ""
-        self.exercises = []
-        self.time = 0
-        self.muscle_group = ""
-
-    def add_exercise(self, exercise):
-        self.exercises.append(exercise)
+from preworkout import *
+from workouts import *
+from exercises import *
 
 
 class WorkoutApp(tk.Tk):
@@ -100,6 +60,8 @@ class CreateWorkoutPage(tk.Frame):
         self.controller = controller
         label = tk.Label(self, text="Create Workout", font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
+        workouts = tk.Label(self, text=print_workout_list(workout_list))
+        workouts.pack(side="bottom", fill="x", pady=10)
         home_button = tk.Button(self, text="Back",
                                 command=lambda: controller.show_frame("HomePage"))
         home_button.place(x=10, y=10)
@@ -116,6 +78,8 @@ class PreworkoutPage(tk.Frame):
         home_button = tk.Button(self, text="Back",
                                 command=lambda: controller.show_frame("HomePage"))
         home_button.place(x=10, y=10)
+
+
 
 if __name__ == "__main__":
     app = WorkoutApp()
