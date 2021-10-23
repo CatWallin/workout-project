@@ -80,11 +80,13 @@ class HomePage(tk.Frame):
         label.pack(side="top", fill="x", pady=10)
 
         create_workout_button = tk.Button(
+            self,
             text="Create Workout!",
             command=lambda: controller.show_frame("CreateWorkoutPage")
         )
 
         preworkout_button = tk.Button(
+            self,
             text="Browse Pre-Workout!",
             command = lambda: controller.show_frame("PreworkoutPage")
         )
@@ -98,9 +100,9 @@ class CreateWorkoutPage(tk.Frame):
         self.controller = controller
         label = tk.Label(self, text="Create Workout", font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
-        home_button = tk.Button(self, text="Go to the home Page",
+        home_button = tk.Button(self, text="Back",
                                 command=lambda: controller.show_frame("HomePage"))
-        home_button.pack()
+        home_button.place(x=10, y=10)
 
 
 class PreworkoutPage(tk.Frame):
@@ -111,12 +113,13 @@ class PreworkoutPage(tk.Frame):
         label.pack(side="top", fill="x", pady=10)
         pre_label = tk.Label(self, text=print_preworkout(preworkout_list))
         pre_label.pack(side="bottom", fill="x", pady=10)
-        home_button = tk.Button(self, text="Go to the home Page",
+        home_button = tk.Button(self, text="Back",
                                 command=lambda: controller.show_frame("HomePage"))
-        home_button.pack()
+        home_button.place(x=10, y=10)
 
 if __name__ == "__main__":
     app = WorkoutApp()
+    app.minsize(300, 300)
     app.mainloop()
 
 
