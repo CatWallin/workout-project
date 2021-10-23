@@ -1,6 +1,7 @@
 # Catherine Wallin
 
 import tkinter as tk
+from tkinter import font as tkfont
 
 
 class PreWorkout:                               # class to hold preworkout information
@@ -10,6 +11,7 @@ class PreWorkout:                               # class to hold preworkout infor
         self.price = price
         self.servings = servings
         self.caffeine = caffeine
+
 
 def print_preworkout(preworkout_list):
     element = ''
@@ -24,6 +26,7 @@ alani_nu = PreWorkout("Alani Nu Pre-Workout", "Breezeberry", 39.99, 30, 200)
 total_war = PreWorkout("Total War REDCON1", "Tiger's Blood", 44.99, 30, 250)
 
 preworkout_list = [bucked_up, ghost_legend, alani_nu, total_war]
+
 
 class Exercise:                                 # class to hold info about individual exercises
 
@@ -44,33 +47,79 @@ class Workout:                                  # class to hold workout data
         self.exercises.append(exercise)
 
 
-window = tk.Tk()
-label = tk.Label(text="Workout Application")
-label.pack()
+class WorkoutApp(tk.Tk):
+    def __init__(self, *args, **kwargs):
+        tk.Tk.__init__(self, *args, **kwargs)
 
-create_workout_button = tk.Button(
-    text="Create Workout!",
-    width=20,
-    height=4
-)
-create_workout_button.pack()
+        self.title_font = tkfont.Font(size=18, weight="bold")
 
-preworkout_button = tk.Button(
-    text="Browse Pre-Workout!",
-    width=20,
-    height=4
-)
-preworkout_button.pack()
+        container = tk.Frame(self)
+        container.pack(side="top", fill="both", expand=True)
+        container.grid_rowconfigure(0, weight=1)
+        container.grid_columnconfigure(0, weight=1)
+
+        self.frames = {}
+        for i in (HomePage, CreateWorkoutPage, PreworkoutPage):
+            page_name = i.__name__
+            frame = i(parent=container, controller=self)
+            self.frames[page_name] = frame
+            frame.grid(row=0, column=0, sticky="nsew")
+
+        self.show_frame("HomePage")
+
+    def show_frame(self, page_name):
+        frame = self.frames[page_name]
+        frame.tkraise()
 
 
-def handle_preworkout_click(event):
-    preworkout_window = tk.Tk()
-    pre_label = tk.Label(text=print_preworkout(preworkout_list))
-    pre_label.pack()
+class HomePage(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label = tk.Label(self, text="Workout Application", font=controller.title_font)
+        label.pack(side="top", fill="x", pady=10)
 
-preworkout_button.bind("<Button-1>", handle_preworkout_click)
+        create_workout_button = tk.Button(
+            text="Create Workout!",
+            command=lambda: controller.show_frame("CreateWorkoutPage")
+        )
 
-window.mainloop()
+        preworkout_button = tk.Button(
+            text="Browse Pre-Workout!",
+            command = lambda: controller.show_frame("PreworkoutPage")
+        )
+        create_workout_button.pack()
+        preworkout_button.pack()
+
+
+class CreateWorkoutPage(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label = tk.Label(self, text="Create Workout", font=controller.title_font)
+        label.pack(side="top", fill="x", pady=10)
+        home_button = tk.Button(self, text="Go to the home Page",
+                                command=lambda: controller.show_frame("HomePage"))
+        home_button.pack()
+
+
+class PreworkoutPage(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label = tk.Label(self, text="Browse Pre-Workout", font=controller.title_font)
+        label.pack(side="top", fill="x", pady=10)
+        pre_label = tk.Label(self, text=print_preworkout(preworkout_list))
+        pre_label.pack(side="bottom", fill="x", pady=10)
+        home_button = tk.Button(self, text="Go to the home Page",
+                                command=lambda: controller.show_frame("HomePage"))
+        home_button.pack()
+
+if __name__ == "__main__":
+    app = WorkoutApp()
+    app.mainloop()
+
+
 
 
 
