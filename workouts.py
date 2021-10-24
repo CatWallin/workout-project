@@ -28,8 +28,22 @@ def print_workout(workout_object):
     return element
 
 
-lower_body_exercises = [deadlift, squat, lunges, bulgarian_split_squats, jump_squat]
+quad_exercises = []
 
-lower_body_workout = Workout("Lower Body Burnout", lower_body_exercises, "30 minutes")
+for exercise in exercises_master_list:
+    if "Quads" in exercise.muscle_groups:
+        quad_exercises.append(exercise)
+        print(exercise.name)
 
-workout_list = [lower_body_workout]
+quad_burnout = Workout("Quad Burnout!", quad_exercises, "30 minutes")
+
+upper_body_exercises = []
+
+for exercise in exercises_master_list:
+    if "Chest" in exercise.muscle_groups or "Biceps" in exercise.muscle_groups or "Triceps" in exercise.muscle_groups:
+        upper_body_exercises.append(exercise)
+        print(exercise.name)
+
+upper_body = Workout("Upper Body", upper_body_exercises, "30 minutes")
+
+workout_list = [quad_burnout, upper_body]

@@ -1,16 +1,20 @@
 from preworkout import *
 from workouts import *
+import csv
 
 
 class Exercise:                                 # class to hold info about individual exercises
 
-    def __init__(self, name):
+    def __init__(self, name, muscle_groups, type):
         self.name = name
-        self.reps = 12
+        self.muscle_groups = muscle_groups
+        self.type = type
 
+exercises_master_list = []
 
-deadlift = Exercise("deadlift")
-squat = Exercise("squat")
-lunges = Exercise("lunges")
-bulgarian_split_squats = Exercise("bulgarian split squats")
-jump_squat = Exercise("jump squat")
+with open('exercise_data.csv') as csv_file:
+    csv_reader = csv.reader(csv_file, delimiter=',')
+    line_count = 0
+    for row in csv_reader:
+        exercise = Exercise(row[0], row[1], row[2])
+        exercises_master_list.append(exercise)
