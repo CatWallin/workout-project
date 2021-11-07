@@ -2,9 +2,14 @@
 
 import tkinter as tk
 from tkinter import font as tkfont
+import requests as req
+import flask
+
 from preworkout import *
 from workouts import *
 from exercises import *
+
+preworkout_data = None
 
 
 class WorkoutApp(tk.Tk):
@@ -83,7 +88,9 @@ class PreworkoutPage(tk.Frame):
         self.controller = controller
         label = tk.Label(self, text="Browse Pre-Workout", font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
-        pre_label = tk.Label(self, text=print_preworkout(preworkout_list))
+
+        pre_label = tk.Label(self, text=get_preworkout(preworkout_data))
+
         pre_label.pack(side="bottom", fill="x", pady=10)
         home_button = tk.Button(self, text="Back",
                                 command=lambda: controller.show_frame("HomePage"))
@@ -99,8 +106,11 @@ class WorkoutPage(tk.Frame):
         #pre_label = tk.Label(self, text=print_preworkout(preworkout_list))
         #pre_label.pack(side="bottom", fill="x", pady=10)
         home_button = tk.Button(self, text="Back",
-                                command=lambda: controller.show_frame("HomePage"))
+                                command=lambda: controller.show_frame("LetsWorkoutPage"))
         home_button.place(x=10, y=10)
+
+
+
 
 
 if __name__ == "__main__":

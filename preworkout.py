@@ -1,5 +1,9 @@
 from workouts import *
 from exercises import *
+import json, requests
+from flask import request
+import ast
+import requests as req
 
 
 class PreWorkout:                               # class to hold preworkout information
@@ -10,16 +14,14 @@ class PreWorkout:                               # class to hold preworkout infor
         self.servings = servings
         self.caffeine = caffeine
 
-def print_preworkout(preworkout_list):
+
+def get_preworkout(preworkout_data):
+    if preworkout_data is None:
+        resp = req.get("http://localhost:8000/pre-workout")
+        preworkout_data = resp.json()
     element = ''
-    for i in range(len(preworkout_list)):
-        element += preworkout_list[i].name + '\n' + ' $' + str(preworkout_list[i].price) + ' ' + str(preworkout_list[i].servings) + ' servings' + '\n\n'
+    for product in preworkout_data:
+        element += product + '\n' + preworkout_data[product]["brand details"] + "\n" + \
+                   preworkout_data[product]["price"] + "\n" + preworkout_data[product]["website"] + "\n\n"
+
     return element
-
-
-bucked_up = PreWorkout("Bucked Up Woke AF", "Watermelon Lemonade", 54.99, 30, 333)
-ghost_legend = PreWorkout("Ghost Legend", "Ocean Water", 44.99, 25, 250)
-alani_nu = PreWorkout("Alani Nu Pre-Workout", "Breezeberry", 39.99, 30, 200)
-total_war = PreWorkout("Total War REDCON1", "Tiger's Blood", 44.99, 30, 250)
-
-preworkout_list = [bucked_up, ghost_legend, alani_nu, total_war]
