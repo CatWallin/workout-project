@@ -24,7 +24,7 @@ class WorkoutApp(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for i in (HomePage, LetsWorkoutPage, PreworkoutPage, WorkoutPage):
+        for i in (HomePage, LetsWorkoutPage, PreworkoutPage, LetsWorkoutPage, WorkoutPage):
             page_name = i.__name__
             frame = i(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -35,6 +35,9 @@ class WorkoutApp(tk.Tk):
     def show_frame(self, page_name):
         frame = self.frames[page_name]
         frame.tkraise()
+
+    def get_page(self, page_name):
+        return self.frames[page_name]
 
 
 class HomePage(tk.Frame):
@@ -61,19 +64,16 @@ class HomePage(tk.Frame):
 
 class LetsWorkoutPage(tk.Frame):
     def __init__(self, parent, controller):
+        self.current_workout = quad_burnout
         tk.Frame.__init__(self, parent)
         self.controller = controller
-        label = tk.Label(self, text="Let's Workout!", font=controller.title_font)
+        label = tk.Label(self, text="Workouts", font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
-        #workouts = tk.Label(self, text=print_workout_list(workout_list))
-        #workouts.pack(side="bottom", fill="x", pady=10)
         for workout in workout_list:
-            #workouts = tk.Label(self, text=workout.name + ' ' + workout.time)
-            #workouts.pack(side="bottom", fill="x", pady=10)
             workout_button = tk.Button(
                 self,
                 text=workout.name + ' ' + workout.time,
-                command=lambda: controller.show_frame("WorkoutPage")
+                command=lambda : controller.show_frame("WorkoutPage")
             )
             workout_button.pack()
 
@@ -101,16 +101,13 @@ class WorkoutPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-        label = tk.Label(self, text='name', font=controller.title_font)
+        label = tk.Label(self, text=quad_burnout.name, font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
-        #pre_label = tk.Label(self, text=print_preworkout(preworkout_list))
-        #pre_label.pack(side="bottom", fill="x", pady=10)
+        pre_label = tk.Label(self, text=print_workout(quad_burnout))
+        pre_label.pack(side="top", fill="x", pady=10)
         home_button = tk.Button(self, text="Back",
                                 command=lambda: controller.show_frame("LetsWorkoutPage"))
         home_button.place(x=10, y=10)
-
-
-
 
 
 if __name__ == "__main__":

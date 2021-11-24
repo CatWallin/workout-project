@@ -22,9 +22,9 @@ def print_workout_list(workout_list):
 
 
 def print_workout(workout_object):
-    element = workout_object.name + '\n'
+    element = ''
     for i in range(len(workout_object.exercises)):
-        element += workout_object.exercises[i].name + ' ' + str(workout_object[i].exercises.reps) + '\n'
+        element += workout_object.exercises[i].name + '\n'
     return element
 
 
@@ -36,6 +36,7 @@ for exercise in exercises_master_list:
         print(exercise.name)
 
 quad_burnout = Workout("Quad Burnout!", quad_exercises, "30 minutes")
+
 
 upper_body_exercises = []
 

@@ -17,14 +17,16 @@ class PreWorkout:                               # class to hold preworkout infor
 
 def get_preworkout(preworkout_data):
     if preworkout_data is None:
-        resp = req.get("http://localhost:8000/pre-workout")
-        preworkout_data = resp.json()
+        pre_workout = open("preworkout.json")
+        preworkout_data = json.load(pre_workout)
+        #resp = req.get("http://localhost:8000/pre-workout")
+        #preworkout_data = resp.json()
+
     element = ''
     count = 0
     for product in preworkout_data:
         if count == 10: break
-        element += product + '\n' + preworkout_data[product]["brand details"] + "\n" + \
-                   preworkout_data[product]["price"] + "\n" + preworkout_data[product]["website"] + "\n\n"
+        element += product + '\n' + preworkout_data[product]["brand details"] + "\n" + preworkout_data[product]["price"] + "\n" + preworkout_data[product]["website"] + "\n\n"
         count += 1
 
     return element
