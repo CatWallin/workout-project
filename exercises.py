@@ -3,7 +3,7 @@ from workouts import *
 import csv
 
 
-class Exercise:                                 # class to hold info about individual exercises
+class Exercise:
 
     def __init__(self, name, muscle_groups, type):
         self.name = name

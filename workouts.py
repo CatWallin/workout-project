@@ -3,7 +3,7 @@ from workouts import *
 from exercises import *
 
 
-class Workout:                                  # class to hold workout data
+class Workout:
 
     def __init__(self, name, exercises, time):
         self.name = name

@@ -6,7 +6,7 @@ import ast
 import requests as req
 
 
-class PreWorkout:                               # class to hold preworkout information
+class PreWorkout:
     def __init__(self, name, flavor, price, servings, caffeine):
         self.name = name
         self.flavor = flavor
