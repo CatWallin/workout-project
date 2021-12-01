@@ -1,3 +1,6 @@
+import tkinter.ttk
+from tkinter import *
+from tkinter import ttk
 from preworkout import *
 from workouts import *
 from exercises import *
@@ -22,10 +25,25 @@ def print_workout_list(workout_list):
 
 
 def print_workout(workout_object):
-    element = ''
+
+    workout_tk = Tk()
+    workout_tk.geometry("700x350")
+
+    table = ttk.Treeview(workout_tk, column=('exercise', 'reps'), show='headings', height=5)
+    table['columns'] = ('exercise', 'reps')
+
+    table.column("0", anchor=CENTER)
+    table.heading("0", text="Exercise")
+    table.column("1", anchor=CENTER)
+    table.heading("1", text="Reps")
+
     for i in range(len(workout_object.exercises)):
-        element += workout_object.exercises[i].name + '\n'
-    return element
+
+        table.insert('', 'end', text=i, values=(workout_object.exercises[i].name, str(workout_object.exercises[i].reps)))
+
+    table.pack()
+
+    return
 
 
 quad_exercises = []
