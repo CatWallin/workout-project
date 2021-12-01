@@ -4,6 +4,8 @@ import json, requests
 from flask import request
 import ast
 import requests as req
+from tkinter import *
+from tkinter import ttk
 
 
 class PreWorkout:
@@ -22,11 +24,23 @@ def get_preworkout(preworkout_data):
         #resp = req.get("http://localhost:8000/pre-workout")
         #preworkout_data = resp.json()
 
-    element = ''
+    table = Tk()
+    table.geometry("950x300")
+
+    preworkout_display = ttk.Treeview(table, column=("Brand", "Price", "Link"), show='headings', height=15)
+    preworkout_display.column("# 1", anchor=CENTER, width="600")
+    preworkout_display.heading("# 1", text="Brand")
+    preworkout_display.column("# 2", anchor=CENTER, width="100")
+    preworkout_display.heading("# 2", text="Price")
+    preworkout_display.column("# 3", anchor=CENTER, width="200")
+    preworkout_display.heading("# 3", text="Link")
+
     count = 0
     for product in preworkout_data:
-        if count == 10: break
-        element += product + '\n' + preworkout_data[product]["brand details"] + "\n" + preworkout_data[product]["price"] + "\n" + preworkout_data[product]["website"] + "\n\n"
+        if count == 35: break
+        preworkout_display.insert('', 'end', text=count, values=(preworkout_data[product]["brand details"], preworkout_data[product]["price"], preworkout_data[product]["website"]))
         count += 1
 
-    return element
+    preworkout_display.pack()
+
+    return

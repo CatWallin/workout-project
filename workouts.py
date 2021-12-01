@@ -27,7 +27,7 @@ def print_workout_list(workout_list):
 def print_workout(workout_object):
 
     workout_tk = Tk()
-    workout_tk.geometry("700x350")
+    workout_tk.geometry("450x150")
 
     table = ttk.Treeview(workout_tk, column=('exercise', 'reps'), show='headings', height=5)
     table['columns'] = ('exercise', 'reps')

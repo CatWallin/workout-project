@@ -24,7 +24,7 @@ class WorkoutApp(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for i in (HomePage, LetsWorkoutPage, PreworkoutPage, LetsWorkoutPage):
+        for i in (HomePage, LetsWorkoutPage, LetsWorkoutPage):
             page_name = i.__name__
             frame = i(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -56,7 +56,7 @@ class HomePage(tk.Frame):
         preworkout_button = tk.Button(
             self,
             text="Browse Pre-Workout!",
-            command = lambda: controller.show_frame("PreworkoutPage")
+            command=lambda: get_preworkout(preworkout_data)
         )
         lets_workout_button.pack()
         preworkout_button.pack()
@@ -73,7 +73,6 @@ class LetsWorkoutPage(tk.Frame):
             workout_button = tk.Button(
                 self,
                 text=workout.name + ' ' + workout.time,
-                #command=lambda : controller.show_frame("WorkoutPage")
                 command=lambda : print_workout(workout)
             )
             workout_button.pack()
@@ -83,24 +82,6 @@ class LetsWorkoutPage(tk.Frame):
                 text="Back",
                 command=lambda: controller.show_frame("HomePage"))
         home_button.place(x=10, y=10)
-
-
-class PreworkoutPage(tk.Frame):
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        self.controller = controller
-        label = tk.Label(self, text="Browse Pre-Workout", font=controller.title_font)
-        label.pack(side="top", fill="x", pady=10)
-
-        pre_label = tk.Label(self, text=get_preworkout(preworkout_data))
-
-        pre_label.pack(side="bottom", fill="x", pady=10)
-        home_button = tk.Button(
-                self,
-                text="Back",
-                command=lambda: controller.show_frame("HomePage"))
-        home_button.place(x=10, y=10)
-
 
 
 if __name__ == "__main__":
