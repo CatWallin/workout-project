@@ -25,20 +25,28 @@ def get_preworkout(preworkout_data):
         #preworkout_data = resp.json()
 
     table = Tk()
-    table.geometry("950x300")
+    table.geometry("1200x300")
 
-    preworkout_display = ttk.Treeview(table, column=("Brand", "Price", "Link"), show='headings', height=15)
+    preworkout_display = ttk.Treeview(table, column=("Brand", "Price", "Oz./Servings", "Link"), show='headings', height=15)
     preworkout_display.column("# 1", anchor=CENTER, width="600")
     preworkout_display.heading("# 1", text="Brand")
     preworkout_display.column("# 2", anchor=CENTER, width="100")
     preworkout_display.heading("# 2", text="Price")
     preworkout_display.column("# 3", anchor=CENTER, width="200")
-    preworkout_display.heading("# 3", text="Link")
+    preworkout_display.heading("# 3", text="Oz./Servings")
+    preworkout_display.column("# 4", anchor=CENTER, width="200")
+    preworkout_display.heading("# 4", text="Link")
 
     count = 0
     for product in preworkout_data:
-        if count == 35: break
-        preworkout_display.insert('', 'end', text=count, values=(preworkout_data[product]["brand details"], preworkout_data[product]["price"], preworkout_data[product]["website"]))
+        if count == 45: break
+
+        string = preworkout_data[product]["brand details"]
+        if string.find("(") != -1:
+            text = string.split("(")
+            text[1] = text[1].replace(')', '')
+
+        preworkout_display.insert('', 'end', text=count, values=(text[0], preworkout_data[product]["price"], text[1], preworkout_data[product]["website"]))
         count += 1
 
     preworkout_display.pack()
